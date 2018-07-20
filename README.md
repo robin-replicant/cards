@@ -1,56 +1,29 @@
-## About go
+## Structs 
 
-Go is not a OOP
+You can think of structs as objects if your background is JS.
 
-### Variables
+Structs can be embeded into another.
 
-- Static types.
-- some basic types: bool, string, int, float64.
-- we use := to difined a new variable, only new.
- card:= "Ace of Spades"
- then => 
- card = "Five of Diamonds"
+### Notes
 
- ### function declarations
+Go is passed by value.
 
-```
- fucn newCard() string {
+Slices and structs work different with pointers and modified value/references
 
- }
- ```
+slice are fancy arrays
 
- func main() {
-	card := newCard()
+|slice|array|
+|---------|---------------------- |         
+|tr to head    |has the actual values|
+|capacity       |   |
+|length         |   | 
 
-	fmt.Println(card)
-}
+even if the slice is being copied it is still pointing to
+the array.
 
-func newCard() string {
-	return "Five of Diamonds"
-}
+other types that fuction the same (reference types):
+maps, channels, pointers, functions
 
- we have to tell what type of value we are going to return.
-
- ### Array and slice
-
- array: fixed length list of things
- 
- slice: an array that can grow or shirnk, every element must be the same type.
-cards := []string{newCard(), newCard()}
-
-to add an element
-
-cards = append(cards, "Six of Spades")
-
-returns a new slice.
-
-### loops
-
-for i, card := range cards {
-	fmt.Println(i, card)
-}
-
-if we replace i with _ we are telling go that we are not goint to use the index.
 
 
 
