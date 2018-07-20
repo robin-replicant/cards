@@ -1,29 +1,23 @@
-## Structs 
+## Maps
 
-You can think of structs as objects if your background is JS.
+- the values must be the same type.
+- the keys must be the same type.
 
-Structs can be embeded into another.
+### Differences between structs and maps
 
-### Notes
+*Map*
+- All keys must be the same type.
+- All values must be the sae type.
+- Keys are indexed, we can iterate over them.
+- Reference type!
+- Use to represent a collection of related properties.
+- Don't need to know all the keys at compile time.
 
-Go is passed by value.
-
-Slices and structs work different with pointers and modified value/references
-
-slice are fancy arrays
-
-|slice|array|
-|---------|---------------------- |         
-|tr to head    |has the actual values|
-|capacity       |   |
-|length         |   | 
-
-even if the slice is being copied it is still pointing to
-the array.
-
-other types that fuction the same (reference types):
-maps, channels, pointers, functions
-
-
+*Struct*
+- Values can ve of different type.
+- You need to know all the different fields at compile time.
+- Keys don't support indexing.
+- Use to represent a "thing" with a lot of different properties.
+- Value type!
 
 
