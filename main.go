@@ -1,40 +1,45 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
+
+type bot interface {
+	getGreeting() string
+}
+
+type englishBot struct{}
+type spanishBot struct{}
 
 func main() {
-	/*colors := map[string]string{
-		"red":   "#ff0000",
-		"green": "#4bf745",
-	}*/
+	eb := englishBot{}
+	sb := spanishBot{}
 
-	// an other way of declaring
-	//var colors map[string]string
-
-	// other way
-	//colors := make(map[string]string)
-	//colors["white"] = "#ffffff"
-
-	/*colors := make(map[int]string)
-	colors[10] = "#ffffff"
-	fmt.Println(colors)
-
-	delete(colors, 10)
-
-	fmt.Println(colors)*/
-
-	colors := map[string]string{
-		"red":   "#ff0000",
-		"green": "#4bf745",
-		"white": "#ffffff",
-	}
-
-	fmt.Println(colors)
-	printMap(colors)
+	printGreeting(eb)
+	printGreeting(sb)
 }
 
-func printMap(c map[string]string) {
-	for color, hex := range c {
-		fmt.Println("Hex code for", color, "is", hex)
-	}
+func printGreeting(b bot) {
+	fmt.Println(b.getGreeting())
 }
+
+func (englishBot) getGreeting() string {
+	// Very custom logic for generating an englisg greeting
+	return "Hello there!"
+}
+
+func (spanishBot) getGreeting() string {
+	// Very custom logic for generating an spanish greeting
+	return "Hola"
+}
+
+/*
+func printGreeting(eb englishBot) {
+	fmt.Println(eb.getGreeting())
+}
+
+
+func printGreeting(sb spanishBot) {
+	fmt.Println(sb.getGreeting())
+}
+*/
