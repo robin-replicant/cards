@@ -2,44 +2,84 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"net/http"
+	"os"
 )
 
-type bot interface {
-	getGreeting() string
+type logWriter struct{}
+
+type triangle struct {
+	height float64
+	base   float64
+}
+type square struct {
+	sideLength float64
 }
 
-type englishBot struct{}
-type spanishBot struct{}
+type shape interface {
+	getArea() float64
+}
 
 func main() {
-	eb := englishBot{}
-	sb := spanishBot{}
 
-	printGreeting(eb)
-	printGreeting(sb)
+	// must put the http://
+	resp, err := http.Get("http://google.com")
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+
+	/*
+		bs := make([]byte, 9999)
+		resp.Body.Read(bs)
+		fmt.Println(string(bs))
+	*/
+
+	//io.Copy(os.Stdout, resp.Body)
+	lw := logWriter{}
+	io.Copy(lw, resp.Body)
+
+	t := triangle{
+		base:   2,
+		height: 5,
+	}
+
+	s := square{
+		sideLength: 4,
+	}
+
+	printArea(t)
+	printArea(s)
+
+	//fmt.println()
+
+	// resp sería lo que se lee del archivo
+	file, err := os.Open(os.Args[1])
+
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+
+	io.Copy(os.Stdout, file)
 }
 
-func printGreeting(b bot) {
-	fmt.Println(b.getGreeting())
+func (logWriter) Write(bs []byte) (int, error) {
+	fmt.Println(string(bs))
+	fmt.Println("Just wrote this many bytes:", len(bs))
+
+	return len(bs), nil
 }
 
-func (englishBot) getGreeting() string {
-	// Very custom logic for generating an englisg greeting
-	return "Hello there!"
+func (t triangle) getArea() float64 {
+	return 05 * t.base * t.height
 }
 
-func (spanishBot) getGreeting() string {
-	// Very custom logic for generating an spanish greeting
-	return "Hola"
+func (s square) getArea() float64 {
+	return s.sideLength * s.sideLength
 }
 
-/*
-func printGreeting(eb englishBot) {
-	fmt.Println(eb.getGreeting())
+func printArea(s shape) {
+	fmt.Println(s.getArea())
 }
-
-
-func printGreeting(sb spanishBot) {
-	fmt.Println(sb.getGreeting())
-}
-*/
